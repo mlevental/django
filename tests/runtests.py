@@ -59,6 +59,7 @@ ALWAYS_INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.staticfiles',
+    'django.contrib.twofactorauth',
 ]
 
 ALWAYS_MIDDLEWARE = [
@@ -67,6 +68,7 @@ ALWAYS_MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.twofactorauth.middleware.TFAMiddleware',
 ]
 
 # Need to add the associated contrib app to INSTALLED_APPS in some cases to

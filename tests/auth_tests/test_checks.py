@@ -96,6 +96,12 @@ class UserModelChecksTests(SimpleTestCase):
             def is_authenticated(self):
                 return True
 
+            def is_one_factor_authenticated(self):
+                return True
+
+            def is_two_factor_authenticated(self):
+                return True
+
         errors = checks.run_checks(app_configs=self.apps.get_app_configs())
         self.assertEqual(errors, [
             checks.Critical(
@@ -111,6 +117,20 @@ class UserModelChecksTests(SimpleTestCase):
                 'users will be treated as authenticated!' % BadUser,
                 obj=BadUser,
                 id='auth.C010',
+            ),
+            checks.Critical(
+                '%s.is_one_factor_authenticated must be an attribute or property '
+                'rather than a method. Ignoring this is a security issue as anonymous '
+                'users will be treated as one factor authenticated!' % BadUser,
+                obj=BadUser,
+                id='auth.C011',
+            ),
+            checks.Critical(
+                '%s.is_two_factor_authenticated must be an attribute or property rather '
+                'than a method. Ignoring this is a security issue as anonymous or '
+                'one factor authenticated users will be treated as two factor authenticated!' % BadUser,
+                obj=BadUser,
+                id='auth.C012',
             ),
         ])
 

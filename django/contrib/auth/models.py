@@ -432,5 +432,13 @@ class AnonymousUser:
     def is_authenticated(self):
         return False
 
+    @property
+    def is_one_factor_authenticated(self):
+        return False
+
+    @property
+    def is_two_factor_authenticated(self):
+        return False
+
     def get_username(self):
         return self.username

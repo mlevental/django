@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}" />
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+  <h1>{% trans 'Use one of the following TFA methods'%}:</h1>
+  {% for method_name, form in forms.items %}
+    <form method="POST">
+      <fieldset>
+        <legend>{{ method_name }}</legend>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="hidden" name="next" value="{{ next }}"/>
+          <p><button name="type" value="{{ method_name }}">{% trans 'Submit' %}</button></p>
+      </fieldset>
+    </form>
+  {% endfor %}
+</div>
+
+{% endblock %}

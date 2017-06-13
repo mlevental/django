@@ -91,6 +91,26 @@ def check_user_model(app_configs=None, **kwargs):
                 id='auth.C010',
             )
         )
+    if isinstance(cls().is_one_factor_authenticated, MethodType):
+        errors.append(
+            checks.Critical(
+                '%s.is_one_factor_authenticated must be an attribute or property '
+                'rather than a method. Ignoring this is a security issue as anonymous '
+                'users will be treated as one factor authenticated!' % cls,
+                obj=cls,
+                id='auth.C011',
+            )
+        )
+    if isinstance(cls().is_two_factor_authenticated, MethodType):
+        errors.append(
+            checks.Critical(
+                '%s.is_two_factor_authenticated must be an attribute or property rather '
+                'than a method. Ignoring this is a security issue as anonymous or '
+                'one factor authenticated users will be treated as two factor authenticated!' % cls,
+                obj=cls,
+                id='auth.C012',
+            )
+        )
     return errors
 
 

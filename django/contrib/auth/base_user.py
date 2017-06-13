@@ -96,6 +96,18 @@ class AbstractBaseUser(models.Model):
         """
         return True
 
+    @property
+    def is_one_factor_authenticated(self):
+        """
+        Always return True. An authenticated user is authenticated at
+        least with one factor.
+        """
+        return True
+
+    @property
+    def is_two_factor_authenticated(self):
+        return hasattr(self, 'tfa_device') and self.tfa_device is not None
+
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
         self._password = raw_password

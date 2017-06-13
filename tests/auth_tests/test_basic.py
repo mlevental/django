@@ -33,6 +33,8 @@ class BasicTestCase(TestCase):
         # Check authentication/permissions
         self.assertFalse(u.is_anonymous)
         self.assertTrue(u.is_authenticated)
+        self.assertTrue(u.is_one_factor_authenticated)
+        self.assertFalse(u.is_two_factor_authenticated)
         self.assertFalse(u.is_staff)
         self.assertTrue(u.is_active)
         self.assertFalse(u.is_superuser)
@@ -70,6 +72,8 @@ class BasicTestCase(TestCase):
         self.assertEqual(a.get_username(), '')
         self.assertTrue(a.is_anonymous)
         self.assertFalse(a.is_authenticated)
+        self.assertFalse(a.is_one_factor_authenticated)
+        self.assertFalse(a.is_two_factor_authenticated)
         self.assertFalse(a.is_staff)
         self.assertFalse(a.is_active)
         self.assertFalse(a.is_superuser)
